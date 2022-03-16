@@ -7,10 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\js\site.js" />
-  </ItemGroup>
-
-  <ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.2" />
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.2" />
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.2" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
@@ -27,6 +26,15 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\SharedResource.az.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SharedResource.ru-RU.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

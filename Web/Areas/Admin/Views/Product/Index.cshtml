@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Entities.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+             <th>Id</th>
+             <th>Product Name</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+   
+            <th>
+                @Html.DisplayNameFor(model => model.IsFeatured)
+            </th>
+          
+            <th>
+                @Html.DisplayNameFor(model => model.CoverPhotoId)
+            </th>
+          
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InStock)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+        }
+
+@foreach (var item in Model) {
+            var proRecord = item.ProductRecords.FirstOrDefault(c => c.LanguageID == 1);
+            var catRecord = item.Category.CategoryRecords.FirstOrDefault(c => c.LanguageID == 1);
+            count++;
+            <tr>
+                  <td>
+                @count
+            </td>
+            <td>@(proRecord!=null?proRecord.Name:"-" )</td> @*vozmojno ctobi bila situaciya, cto net infromacii na druqom yazike*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+          
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.IsFeatured)
+            </td>
+           
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.CoverPhotoId)
+            </td>
+
+          
+            <td>
+                @(catRecord!=null?catRecord.Name:null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InStock)
+            </td>
+        
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

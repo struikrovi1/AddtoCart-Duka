@@ -1,0 +1,152 @@
+﻿@model Entities.Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+              <input id="lang" type="hidden" name="languageId" value="1" />
+
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                @{
+                    int langcount = 0;
+                    int countTab = 0;
+                }
+                @foreach (var item in ViewBag.LanguageList as List<Entities.Language>)
+                {
+                    <li class="nav-item">
+                        <a lang-id="@item.Id" class="nav-link @(langcount==0? "active" : null)" id="home-tab" data-toggle="tab" href="#home@(langcount)" role="tab" aria-controls="home" aria-selected="true">@item.Name</a>
+                    </li>
+                    langcount++;
+
+                }
+
+
+            </ul>
+
+
+
+
+
+
+            <div class="tab-content" id="myTabContent">
+
+                @foreach (var lang in ViewBag.LanguageList as List<Entities.Language>)
+                {
+
+                    <div class="tab-pane fade @(countTab==0? "show active":"")" id="home@(countTab)" role="tabpanel" aria-labelledby="home-tab">
+
+                        <input type="hidden" name="[@countTab].LanguageId" value="@lang.Id" />
+
+                        <div class="form-group">
+                            <label for="[@countTab].Name" class="control-label">Name</label>
+                            <input name="[@countTab].Name" id="Name" class="form-control" />
+                            @*   <span asp-validation-for="Price" class="text-danger"></span>*@
+                        </div>
+
+                        <div class="form-group">
+                            <label for="[@countTab].Summary" class="control-label">Summary</label>
+                            <input name="[@countTab].Summary" id="Summary" class="form-control" />
+                            @* <span asp-validation-for="Price" class="text-danger"></span>*@
+                        </div>
+
+                        <div class="form-group">
+                            <label for="[@countTab].Description" class="control-label">Description</label>
+                            <textarea name="[@countTab].Description" id="Description" class="form-control"></textarea>
+
+                            @*  <span asp-validation-for="Price" class="text-danger"></span>*@
+                        </div>
+
+                    </div>
+
+                    countTab++;
+                }
+
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Discount" class="control-label"></label>
+                <input asp-for="Discount" class="form-control" />
+                <span asp-validation-for="Discount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsFeatured" /> @Html.DisplayNameFor(model => model.IsFeatured)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="isSlider" /> @Html.DisplayNameFor(model => model.isSlider)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDay" /> @Html.DisplayNameFor(model => model.IsDay)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="CoverPhotoId" class="control-label"></label>
+                <input asp-for="CoverPhotoId" class="form-control" />
+                <span asp-validation-for="CoverPhotoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rating" class="control-label"></label>
+                <input asp-for="Rating" class="form-control" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <input asp-for="CategoryId" class="form-control" />
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InStock" class="control-label"></label>
+                <input asp-for="InStock" class="form-control" />
+                <span asp-validation-for="InStock" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    <script>
+
+        $(".nav-tabs .nav-item a").on("click", function(){
+            const languageId = $(this).attr("lang-id")
+            $("#lang").val(languageId)
+        })
+
+    </script>
+
+
+}
+    }
