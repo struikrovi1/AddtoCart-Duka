@@ -32,8 +32,10 @@
         <section class="cart-area pt-120 pb-120">
             <div class="container">
                <div class="row">
-                  <div class="col-12">
-                        <form action="#">
+                  <div class="col-12 cart-content">
+                    @if(Model!=null && Model.CartItems != null)
+                    {
+                         <form id = "cartTable" action="#">
                            <div class="table-content table-responsive">
                               <table class="table">
                                     <thead>
@@ -43,7 +45,7 @@
                                           <th class="product-price">Unit Price</th>
                                           <th class="product-quantity">Quantity</th>
                                           <th class="product-subtotal">Total</th>
-                                          <th class="product-remove">Remove</th>
+                                          <th class="">Remove</th>
                                        </tr>
                                     </thead>
                                     <tbody>
@@ -61,10 +63,13 @@
                                           <td class="product-name"><a href="shop-details.html">@currentProduct.Name</a></td>
                                           <td class="product-price"><span class="amount"> @item.Price AZN</span></td>
                                           <td class="product-quantity">
-                                                <div class="cart-plus-minus"><input type="text" value="@quantity"><div class="dec qtybutton">-</div><div class="inc qtybutton">+</div></div>
+                                                <div class="cart-plus-minus"><input type="text" value="@quantity">
+                                                    <div class="dec qtybutton" pro-id="@item.Id">-</div>
+                                                    <div class="inc qtybutton" pro-id="@item.Id">+</div>
+                                                </div>
                                           </td>
                                           <td class="product-subtotal"><span class="amount">@(item.Price*quantity) AZN</span></td>
-                                          <td class="product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
+                                          <td class="product-remove" pro-id = "@item.Id"><a href="#"><i class="fa fa-times"></i></a></td>
                                        </tr>
                                            }
                                       
@@ -99,6 +104,12 @@
                               </div>
                            </div>
                         </form>
+                    }
+                    else
+                    {
+                        <p class = "alert alert-danger">"Cart is empty!"</p>
+                    }
+
                   </div>
                </div>
             </div>

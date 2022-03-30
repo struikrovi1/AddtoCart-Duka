@@ -15,11 +15,11 @@ namespace Web.Controllers
             _productManager = productManager;
         }
 
-        public async Task <IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var cookieData = Request.Cookies["myCookie"];
-           
-            if (cookieData != null)
+
+            if (cookieData != null && cookieData!="")
             {
 
                 List<int> productIds = cookieData.Split("-").Select(x => int.Parse(x)).ToList();
@@ -29,7 +29,7 @@ namespace Web.Controllers
                     ProIds = productIds,
                     CartItems = productList,
                 };
-                return View(vm);    
+                return View(vm);
             }
 
 

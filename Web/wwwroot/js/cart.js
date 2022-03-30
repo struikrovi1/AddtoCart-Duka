@@ -37,7 +37,7 @@ function checkCookie() {
 
 var productIds = [];
 if (getCookie("myCookie") != null && getCookie("myCookie") !== "") {
-    productIds = [...getCookie("myCookie").split(",")];
+    productIds = [...getCookie("myCookie").split("-")];
 
 }
 console.log(productIds)
@@ -45,5 +45,50 @@ $(".cart-btn").on("click", function () {
     console.log("")
     const productId = $(this).attr("pro-id");
     productIds.push(productId)
-    setCookie("myCookie",productIds.join("-"),3)
+    setCookie("myCookie", productIds.join("-"), 3)
+    Swal.fire(
+        'Success!',
+        'Product added to cart',
+        'success'
+    )
+})
+
+
+$(".cart-plus-minus .inc").click(function () {
+
+    const productId = $(this).attr("pro-id");
+    const quantity = $(this).parent().find("input").val()
+    productIds = productIds.filter(p => p !== productId);
+    for (let i = 0; i < quantity; i++) {
+        productIds.push(productId)
+    }
+    setCookie("myCookie", productIds.join("-"), 3)
+
+})
+
+$(".cart-plus-minus .dec").click(function () {
+
+    const productId = $(this).attr("pro-id");
+    const quantity = $(this).parent().find("input").val()
+    productIds = productIds.filter(p => p !== productId);
+    for (let i = 0; i < quantity; i++) {
+        productIds.push(productId)
+    }
+    setCookie("myCookie", productIds.join("-"), 3)
+
+})
+
+
+
+$(".product-remove").click(function (e) {
+    e.preventDefault();
+    $(this).parents("tr").remove();
+    const productId = $(this).attr("pro-id");
+    productIds = productIds.filter(p => p !== productId);
+    setCookie("myCookie", productIds.join("-"), 3)
+    if (productIds.length == 0) {
+        $("#cartTable").addClass("d-none")
+        $(".cart-content").append("<p class='alert alert-danger'>Cart is empty!</p>")
+    }
+
 })
